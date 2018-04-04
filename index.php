@@ -6,7 +6,7 @@ class ReadFile
 
     const INCLUDEEMPTYVALUES = false;
 
-    const WRITETOFILE = true;
+    const WRITEMETHOD = "array"; //Can be: file(Requires destination file value),print(Will print array on screen), array(Will print as is) all is provided as string values
 
     const DESTINATIONFILE = "redirects.txt";
 
@@ -32,7 +32,7 @@ class ReadFile
         $rows = $this->data->rows();
         if($this::LIMITNUMBEROFROWS)
             $rows = array_slice($rows,0,$this::LIMITNUMBEROFROWS);
-        
+
         return $rows;
     }
     public function getPreparedData()
@@ -41,7 +41,7 @@ class ReadFile
         if(!$this::INCLUDEHEADERROWS){ //We dont wish to include header rows
             unset($rows[0]);
         }
-        if($this::WRITETOFILE){
+        if($this::WRITEMETHOD == "file"){
             $startTime = microtime();
             foreach($rows as $rk => $row)
             {
@@ -74,11 +74,19 @@ class ReadFile
             $endTime = microtime();
             return "Success! started at: ".$startTime." Ended at: ".$endTime;
         }
-        else
+        elseif($this::WRITEMETHOD == "array"){
+            return $rows;
+        }
+        elseif($this::WRITEMETHOD == "print")
         {
             return print_r($rows);
         }
     }
 }
 $p = new ReadFile;
-$p->getPreparedData();
+foreach($p->getPreparedData() as $row){
+    var_dump($row);die;
+    $entry = [
+        'phone_number' => $row[4],
+    ];
+}
