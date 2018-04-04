@@ -30,9 +30,9 @@ class ReadFile
     public function getRows()
     {
         $rows = $this->data->rows();
-        if($this::LIMITNUMBEROFROWS){
+        if($this::LIMITNUMBEROFROWS)
             $rows = array_slice($rows,0,$this::LIMITNUMBEROFROWS);
-        }
+        
         return $rows;
     }
     public function getPreparedData()
