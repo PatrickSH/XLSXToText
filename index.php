@@ -83,10 +83,3 @@ class ReadFile
         }
     }
 }
-$p = new ReadFile;
-foreach($p->getPreparedData() as $row){
-    var_dump($row);die;
-    $entry = [
-        'phone_number' => $row[4],
-    ];
-}
